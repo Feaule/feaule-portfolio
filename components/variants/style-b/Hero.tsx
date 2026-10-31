@@ -100,8 +100,11 @@ export default function Hero() {
           >
             {profile.name}
           </h1>
-          <p data-fade className="mt-4 max-w-md text-lg leading-snug text-soft">
-            {profile.tagline}. {profile.hero.line}
+          <p data-fade className="mt-5 font-lab text-xl font-bold text-accent">
+            {profile.tagline}
+          </p>
+          <p data-fade className="mt-2 max-w-lg text-lg leading-snug text-soft">
+            {profile.hero.line}
           </p>
           <a
             data-fade
@@ -117,7 +120,7 @@ export default function Hero() {
           data-fade
           className="w-full rounded-lg border border-line bg-surface/85 p-2 backdrop-blur md:ml-auto md:w-80"
         >
-          <p className="px-2 pb-1 pt-0.5 text-xs text-muted">Layers</p>
+          <p className="px-2 pb-1 pt-0.5 text-xs text-soft">Areas I&apos;m exploring</p>
           <ul>
             {profile.focus.map((name, i) => (
               <li key={name} className="flex items-center gap-1 rounded-md" onPointerEnter={() => pulseLayer(root.current!, i)}>

@@ -48,7 +48,7 @@ export default function About() {
             <div className="relative">
               <div aria-hidden="true" className="absolute inset-0 translate-x-3 translate-y-3 rounded-lg bg-surface md:translate-x-4 md:translate-y-4" />
               <div className="relative overflow-hidden rounded-lg border border-line bg-surface">
-                <div className="flex items-center justify-between gap-4 border-b border-line px-3 py-2 font-mono text-xs text-muted">
+                <div className="flex items-center justify-between gap-4 border-b border-line px-3 py-2 font-mono text-xs text-soft">
                   <span className="truncate">{src.split("/").pop()}</span>
                   <span className="tabular-nums">4:5</span>
                 </div>
@@ -60,6 +60,7 @@ export default function About() {
                     fill
                     sizes="(min-width: 768px) 40vw, 90vw"
                     className="object-cover"
+                    style={{ objectPosition: profile.portrait.position }}
                   />
                   {CORNERS.map((c) => (
                     <span key={c} aria-hidden="true" className={`absolute size-4 border-accent ${c}`} />
@@ -68,42 +69,48 @@ export default function About() {
               </div>
             </div>
             {isPlaceholder && (
-              <figcaption className="mt-6 text-xs text-muted">
+              <figcaption className="mt-6 text-xs text-soft">
                 Placeholder image. Add your photo to /public/images and set portrait.src in data/profile.ts.
               </figcaption>
             )}
           </figure>
 
-          {/* Biography + keyframes */}
-          <div className="flex flex-col gap-8">
-            <p data-fade className="font-lab text-2xl font-semibold leading-snug md:text-3xl">
-              {profile.intro.text}
+          {/* Biography + journey */}
+          <div className="flex flex-col gap-10 md:gap-12">
+            <p data-fade className="font-lab text-2xl font-semibold leading-[1.15] md:text-[2.5rem]">
+              {profile.about.lead}
             </p>
-            {profile.about.paragraphs.map((p) => (
-              <p key={p} data-fade className="max-w-xl text-lg leading-relaxed text-soft">
-                {p}
-              </p>
+
+            {profile.about.sections.map((sec) => (
+              <div key={sec.title} data-fade className="max-w-xl border-t border-line pt-6">
+                <h3 className="font-lab text-base font-bold">{sec.title}</h3>
+                <p className="mt-2 text-lg leading-relaxed text-soft">{sec.text}</p>
+              </div>
             ))}
 
-            <div className="mt-6">
-              <h3 data-fade className="mb-5 text-sm text-soft">Keyframes</h3>
+            <div className="mt-4 border-t border-line pt-8">
+              <h3 data-fade className="mb-6 font-lab text-xl font-bold">{profile.journey.title}</h3>
               <ol data-keylist className="relative border-l border-line pl-8">
-                {profile.milestones.items.map((m) => (
-                  <li key={m.title} data-key data-fade className="relative pb-10 last:pb-0">
+                {profile.journey.stages.map((st) => (
+                  <li key={st.index} data-key data-state="past" data-fade className="group relative pb-10 last:pb-0">
                     <span
                       data-diamond
-                      data-on="true"
                       aria-hidden="true"
-                      className="absolute -left-8 top-1.5 size-3 -translate-x-1/2 rotate-45 border border-accent bg-bg transition-colors data-[on=true]:bg-accent"
+                      className="absolute -left-8 top-1.5 size-3 -translate-x-1/2 rotate-45 border border-accent bg-accent transition-[background-color,scale,box-shadow] group-data-[state=active]:scale-150 group-data-[state=active]:shadow-[0_0_0_4px_color-mix(in_srgb,var(--accent)_25%,transparent)] group-data-[state=future]:bg-bg"
                     />
-                    <h4 className="font-lab text-lg font-bold">{m.title}</h4>
-                    <p className="mt-1 max-w-md text-soft">{m.text}</p>
+                    <p aria-hidden="true" className="font-mono text-xs tabular-nums text-soft">
+                      {st.index} · {st.easing}
+                    </p>
+                    <h4 className="mt-1 font-lab text-lg font-bold transition-colors group-data-[state=active]:text-accent">
+                      {st.title}
+                    </h4>
+                    <p className="mt-1 max-w-md text-soft">{st.text}</p>
                   </li>
                 ))}
                 {/* Playhead: decorative, driven by scroll */}
                 <div data-playhead aria-hidden="true" className="pointer-events-none absolute -left-3 right-0 top-0 h-px bg-accent/60 opacity-0">
                   <span className="absolute -top-[5px] left-[3px] size-2.5 rotate-45 bg-accent" />
-                  <span data-timecode className="absolute -top-6 right-0 bg-bg px-1 font-mono text-xs tabular-nums text-accent">
+                  <span data-timecode className="absolute -top-6 right-0 hidden bg-bg px-1 font-mono text-xs tabular-nums text-accent sm:block">
                     00:00:03:00
                   </span>
                 </div>

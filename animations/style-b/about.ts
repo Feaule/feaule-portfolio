@@ -17,7 +17,7 @@ export function animateAboutB(root: HTMLElement) {
 
   const mm = gsap.matchMedia();
 
-  // Reduced motion: everything is already visible; all keyframes stay lit, playhead hidden.
+  // Reduced motion: everything is already visible; all stages stay "past" (lit), playhead hidden.
   mm.add(MQ.motionOk, () => {
     // ── Heading letters
     const heading = q("[data-split]")[0];
@@ -65,7 +65,12 @@ export function animateAboutB(root: HTMLElement) {
       const y = state.p * height;
       gsap.set(playhead, { y });
       timecode.textContent = timecodeAt(state.p);
-      diamonds.forEach((d, i) => { d.dataset.on = String(y >= tops[i] - 1); });
+      // The stage the playhead has most recently reached is "active"; earlier ones are "past".
+      let active = -1;
+      tops.forEach((t, i) => { if (y >= t - 16) active = i; });
+      items.forEach((li, i) => {
+        li.dataset.state = i < active ? "past" : i === active ? "active" : "future";
+      });
     };
 
     gsap.set(playhead, { opacity: 1 });
@@ -73,7 +78,7 @@ export function animateAboutB(root: HTMLElement) {
     render();
 
     ScrollTrigger.create({
-      trigger: list, start: "top 65%", end: "bottom 55%",
+      trigger: list, start: "top 65%", end: "bottom 85%",
       onRefresh: () => { measure(); render(); },
       onUpdate: (self) => {
         gsap.to(state, { p: self.progress, duration: 0.4, ease: "power2.out", overwrite: true, onUpdate: render });

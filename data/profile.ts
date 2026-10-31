@@ -1,6 +1,7 @@
+
 /**
  * Single source of truth for personal content.
- * Anything with `placeholder: true` is NOT real content — replace before publishing.
+ * Only content wrapped in Placeholder<T> is NOT real.
  */
 export type Placeholder<T> = T & { placeholder: true };
 
@@ -8,45 +9,78 @@ export const profile = {
   name: "Feaule",
   tagline: "Code in Motion",
   role: "Informatics student",
-  /** Taken from the project brief: the four areas the portfolio covers. */
+
+  /**
+   * Areas of interest, not a ranking of expertise.
+   */
   focus: [
     "Frontend development",
     "Business Information Systems",
     "Digital product thinking",
     "Motion graphics",
   ],
-  /** DRAFT hero copy derived from the brief — edit freely. */
+
   hero: {
-    line: "I build interfaces, systems, and motion that belong together.",
+    line: "Exploring technology through code, data, and creative expression.",
   },
-  intro: {
-    placeholder: true,
-    text: "PLACEHOLDER — one or two sentences on who you are and what kind of internship you want.",
-  } as Placeholder<{ text: string }>,
+
   about: {
-    placeholder: true,
-    paragraphs: [
-      "PLACEHOLDER — about paragraph 1: your background and what drew you to informatics.",
-      "PLACEHOLDER — about paragraph 2: how you combine business systems thinking with frontend and motion work.",
+    lead: "I'm an Informatics student curious about how technology and creativity come together to shape digital experiences.",
+
+    sections: [
+      {
+        title: "Beyond the Screen",
+        text: "Exploring frontend development, UI/UX, and data through academic projects, including an apartment management system.",
+      },
+      {
+        title: "Finding My Creative Side",
+        text: "Outside the classroom, I discovered a love for visual storytelling through video editing, motion graphics, and organizational experiences.",
+      },
     ],
-  } as Placeholder<{ paragraphs: string[] }>,
-  /** Biography as "keyframes". Replace with your real milestones, in order. */
-  milestones: {
-    placeholder: true,
-    items: [
-      { title: "PLACEHOLDER — milestone one", text: "PLACEHOLDER — where it started: your first contact with computers or design." },
-      { title: "PLACEHOLDER — milestone two", text: "PLACEHOLDER — studying Informatics and what you focus on." },
-      { title: "PLACEHOLDER — milestone three", text: "PLACEHOLDER — your first motion graphics or code project." },
-      { title: "PLACEHOLDER — milestone four", text: "PLACEHOLDER — what you want to do in an internship." },
+  },
+
+  /**
+   * My Journey: the evolution of interests,
+   * not dated career milestones.
+   */
+  journey: {
+    title: "My Journey",
+    stages: [
+      {
+        index: "01",
+        title: "Discover",
+        easing: "Linear",
+        text: "Started exploring technology through Informatics.",
+      },
+      {
+        index: "02",
+        title: "Explore",
+        easing: "Easy Ease",
+        text: "Learning through code, interfaces, and data.",
+      },
+      {
+        index: "03",
+        title: "Create",
+        easing: "Bezier",
+        text: "Turning ideas into visuals and motion.",
+      },
+      {
+        index: "04",
+        title: "Evolve",
+        easing: "Auto Bezier",
+        text: "Connecting technical and creative perspectives.",
+      },
     ],
-  } as Placeholder<{ items: { title: string; text: string }[] }>,
+  },
+
   portrait: {
-    placeholder: true,
-    /** Put your photo in /public/images and set e.g. "/images/portrait.jpg". null shows the placeholder. */
-    src: null as string | null,
+    src: "/images/portrait.png" as string | null,
     fallbackSrc: "/images/portrait-placeholder.png",
-    alt: "PLACEHOLDER — describe the portrait photo",
-  } as Placeholder<{ src: string | null; fallbackSrc: string; alt: string }>,
+    alt: "Portrait of Feaule",
+    position: "50% 20%",
+  },
+
+  // Replace before publishing.
   contact: {
     placeholder: true,
     email: "hello@example.com",
@@ -54,5 +88,8 @@ export const profile = {
       { label: "GitHub", href: "#" },
       { label: "LinkedIn", href: "#" },
     ],
-  } as Placeholder<{ email: string; links: { label: string; href: string }[] }>,
+  } as Placeholder<{
+    email: string;
+    links: { label: string; href: string }[];
+  }>,
 } as const;
