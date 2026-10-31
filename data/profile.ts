@@ -30,11 +30,23 @@ export const profile = {
       "PLACEHOLDER — about paragraph 2: how you combine business systems thinking with frontend and motion work.",
     ],
   } as Placeholder<{ paragraphs: string[] }>,
+  /** Biography as "keyframes". Replace with your real milestones, in order. */
+  milestones: {
+    placeholder: true,
+    items: [
+      { title: "PLACEHOLDER — milestone one", text: "PLACEHOLDER — where it started: your first contact with computers or design." },
+      { title: "PLACEHOLDER — milestone two", text: "PLACEHOLDER — studying Informatics and what you focus on." },
+      { title: "PLACEHOLDER — milestone three", text: "PLACEHOLDER — your first motion graphics or code project." },
+      { title: "PLACEHOLDER — milestone four", text: "PLACEHOLDER — what you want to do in an internship." },
+    ],
+  } as Placeholder<{ items: { title: string; text: string }[] }>,
   portrait: {
     placeholder: true,
-    src: null as string | null, // e.g. "/images/portrait.jpg"
+    /** Put your photo in /public/images and set e.g. "/images/portrait.jpg". null shows the placeholder. */
+    src: null as string | null,
+    fallbackSrc: "/images/portrait-placeholder.png",
     alt: "PLACEHOLDER — describe the portrait photo",
-  } as Placeholder<{ src: string | null; alt: string }>,
+  } as Placeholder<{ src: string | null; fallbackSrc: string; alt: string }>,
   contact: {
     placeholder: true,
     email: "hello@example.com",
