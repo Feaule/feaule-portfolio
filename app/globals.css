@@ -1,26 +1,85 @@
 @import "tailwindcss";
+@import "@fontsource/instrument-serif/400.css";
+@import "@fontsource/instrument-serif/400-italic.css";
+@import "@fontsource-variable/syne";
 
+/* ── Brand palette (fixed) ─────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --abyssal-navy: #07090e;
+  --smoked-charcoal: #141923;
+  --kinetic-cyan: #38bdf8;
+  --spectral-indigo: #818cf8;
+  --crystalline-white: #f8fafc;
+  --muted-slate: #64748b;
+
+  /* Semantic tokens — dark is the default theme */
+  --bg: var(--abyssal-navy);
+  --surface: var(--smoked-charcoal);
+  --fg: var(--crystalline-white);
+  --fg-soft: color-mix(in srgb, var(--crystalline-white) 72%, var(--muted-slate));
+  --muted: var(--muted-slate);
+  --line: color-mix(in srgb, var(--crystalline-white) 12%, transparent);
+  --accent: var(--kinetic-cyan);
+  --accent-2: var(--spectral-indigo);
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg: var(--crystalline-white);
+  --surface: #e9eef5;
+  --fg: var(--abyssal-navy);
+  --fg-soft: color-mix(in srgb, var(--abyssal-navy) 74%, var(--muted-slate));
+  --muted: #526074; /* slate darkened for AA contrast on white */
+  --line: color-mix(in srgb, var(--abyssal-navy) 14%, transparent);
+  --accent: #0b7bb5; /* cyan darkened for text contrast on white */
+  --accent-2: #4f46e5;
+  color-scheme: light;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-fg: var(--fg);
+  --color-soft: var(--fg-soft);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent2: var(--accent-2);
+
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-serif: "Instrument Serif", Georgia, serif; /* Style A display */
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-lab: "Syne Variable", var(--font-geist-sans), sans-serif; /* Style B display */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+html { scroll-behavior: smooth; }
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+::selection { background: var(--accent); color: var(--bg); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}
+
+/* Pre-paint hidden states for intro animations.
+   Only applied when JS is running (.js) AND motion is allowed, so no-JS and
+   reduced-motion visitors always see the finished layout. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-split] { visibility: hidden; }
+  .js [data-fade] { opacity: 0; }
+  .js [data-draw] { stroke-dashoffset: 1; }
+  .js [data-shape] { opacity: 0; }
 }
