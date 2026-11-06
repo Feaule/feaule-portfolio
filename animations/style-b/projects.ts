@@ -14,7 +14,7 @@ export function animateProjectsB(root: HTMLElement, onNav: (n: CarouselNav) => v
   const track = root.querySelector<HTMLElement>("[data-track]")!;
   const cards = q("[data-card]") as HTMLElement[];
   const inners = q("[data-card-inner]") as HTMLElement[];
-  const arts = q("[data-art]") as HTMLElement[];
+  const arts = cards.map((c) => c.querySelector<HTMLElement>("[data-art]"));
 
   let depthOn = false;
   let raf = 0;
@@ -35,8 +35,8 @@ export function animateProjectsB(root: HTMLElement, onNav: (n: CarouselNav) => v
       cards.forEach((_, i) => {
         const d = i - pos;
         const a = Math.min(Math.abs(d), 1);
-        gsap.set(inners[i], { scale: 1 - a * 0.05, opacity: 1 - a * 0.35 });
-        gsap.set(arts[i], { x: -d * 36 });
+        gsap.set(inners[i], { scale: 1 - a * 0.05 });
+        if (arts[i]) gsap.set(arts[i], { x: -d * 36 });
       });
     }
   };

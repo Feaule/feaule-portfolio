@@ -31,7 +31,7 @@
   --fg-soft: color-mix(in srgb, var(--abyssal-navy) 74%, var(--muted-slate));
   --muted: #526074; /* slate darkened for AA contrast on white */
   --line: color-mix(in srgb, var(--abyssal-navy) 14%, transparent);
-  --accent: #0b7bb5; /* cyan darkened for text contrast on white */
+  --accent: #0a6fa3; /* cyan darkened: >=4.7:1 on both page and card surfaces */
   --accent-2: #4f46e5;
   color-scheme: light;
 }

@@ -4,6 +4,7 @@
  * Only content wrapped in Placeholder<T> is NOT real.
  */
 export type Placeholder<T> = T & { placeholder: true };
+export type ContactLink = { id: string; label: string; handle: string | null; href: string | null };
 
 export const profile = {
   name: "Feaule",
@@ -80,16 +81,26 @@ export const profile = {
     position: "50% 20%",
   },
 
-  // Replace before publishing.
+  /**
+   * Contact. `href: null` renders a dashed "link to be added" row instead of a dead link.
+   * `email` is optional — leave null to hide it, or set e.g. "you@example.com".
+   */
   contact: {
-    placeholder: true,
-    email: "hello@example.com",
+    /** DRAFT copy — edit freely. */
+    lead: "I'm looking for internship opportunities — feel free to say hello.",
+    email: null as string | null,
     links: [
-      { label: "GitHub", href: "#" },
-      { label: "LinkedIn", href: "#" },
-    ],
-  } as Placeholder<{
-    email: string;
-    links: { label: string; href: string }[];
-  }>,
+      { id: "github", label: "GitHub", handle: "github.com/Feaule", href: "https://github.com/Feaule" },
+      { id: "linkedin", label: "LinkedIn", handle: "linkedin.com/in/felixleneka", href: "https://linkedin.com/in/felixleneka" },
+      { id: "instagram", label: "Instagram", handle: "instagram.com/felixaugurius", href: "https://www.instagram.com/felixaugurius/" },
+    ] as ContactLink[],
+  },
+
+  /** External portfolio (e.g. Google Drive) for editing projects. Add the URL when ready. */
+  editing: {
+    label: "Editing portfolio",
+    handle: "My graphic design and motion graphics work",
+    summary: "More of my video editing and motion graphics work, collected in an external portfolio.",
+    href: "https://drive.google.com/drive/folders/1DJG5akWDq_bVfd4wDv4t3OacHTDlsroS?usp=sharing" as string | null,
+  },
 } as const;

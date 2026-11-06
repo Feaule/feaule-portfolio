@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { useGSAP } from "@/lib/gsap";
 import { projects } from "@/data/projects";
+import { profile } from "@/data/profile";
 import { animateProjectsB, stepCarousel, type CarouselNav } from "@/animations/style-b/projects";
 import ProjectArt from "./ProjectArt";
 import ProjectDialog from "./ProjectDialog";
@@ -11,6 +12,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
 
 export default function Projects() {
   const root = useRef<HTMLElement>(null);
+  const total = projects.length + 1; // projects + the editing-portfolio link card
   const [openSlug, setOpenSlug] = useState<string | null>(null);
   const [nav, setNav] = useState<CarouselNav>({ index: 0, atStart: true, atEnd: false });
 
@@ -36,7 +38,7 @@ export default function Projects() {
 
           <div data-controls className="ml-auto flex items-center gap-3">
             <p aria-hidden="true" className="mr-2 font-mono text-sm tabular-nums text-soft">
-              {pad(nav.index + 1)} / {pad(projects.length)}
+              {pad(nav.index + 1)} / {pad(total)}
             </p>
             <button type="button" aria-label="Previous project" disabled={nav.atStart} onClick={() => stepCarousel(root.current!, -1)} className={arrow}>
               <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M11 3 5 9l6 6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
@@ -64,7 +66,7 @@ export default function Projects() {
             data-card
             data-fade
             aria-roledescription="slide"
-            aria-label={`${i + 1} of ${projects.length}`}
+            aria-label={`${i + 1} of ${total}`}
             className="group relative w-[82vw] shrink-0 snap-start sm:w-[28rem] md:w-[42rem]"
           >
             <div data-card-inner className="relative overflow-hidden rounded-lg border border-line bg-surface transition-colors group-hover:border-accent">
@@ -104,6 +106,56 @@ export default function Projects() {
             </div>
           </article>
         ))}
+
+        {/* Last card: external portfolio for editing work */}
+        <article
+          data-card
+          data-fade
+          aria-roledescription="slide"
+          aria-label={`${total} of ${total}`}
+          className="group relative w-[82vw] shrink-0 snap-start sm:w-[28rem] md:w-[42rem]"
+        >
+          <div
+            data-card-inner
+            className={`relative flex h-full flex-col overflow-hidden rounded-lg border bg-surface transition-colors group-hover:border-accent ${
+              profile.editing.href ? "border-accent" : "border-dashed border-muted"
+            }`}
+          >
+            <div className="relative aspect-[16/10] overflow-hidden border-b border-line bg-bg">
+              <div data-art aria-hidden="true" className="absolute inset-0 grid place-items-center">
+                <div className="relative grid aspect-square h-[78%] place-items-center rounded-full border border-accent">
+                  <svg width="44" height="44" viewBox="0 0 44 44"><path d="M15 9v26l22-13z" fill="var(--accent)" /></svg>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-1 flex-col p-5 md:p-6">
+              <p className="font-mono text-xs text-soft">External portfolio</p>
+              <h3 className="mt-2 font-lab text-2xl font-bold leading-tight">
+                {profile.editing.href ? (
+                  <a
+                    href={profile.editing.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="outline-none after:absolute after:inset-0 after:rounded-lg after:content-[''] focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-accent"
+                  >
+                    {profile.editing.label}
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                ) : (
+                  profile.editing.label
+                )}
+              </h3>
+              <p className="mt-2 text-soft">{profile.editing.summary}</p>
+              <p className="mt-auto pt-5 text-sm text-accent">
+                {profile.editing.href ? (
+                  <span aria-hidden="true">Open portfolio ↗</span>
+                ) : (
+                  <span className="text-soft">Link to be added</span>
+                )}
+              </p>
+            </div>
+          </div>
+        </article>
       </div>
       <ProjectDialog project={projects.find((p) => p.slug === openSlug) ?? null} onClose={() => setOpenSlug(null)} />
     </section>
