@@ -2,33 +2,16 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { useGSAP } from "@/lib/gsap";
-import { projects, type Project } from "@/data/projects";
+import { projects } from "@/data/projects";
 import { animateProjectsB, stepCarousel, type CarouselNav } from "@/animations/style-b/projects";
+import ProjectArt from "./ProjectArt";
+import ProjectDialog from "./ProjectDialog";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
-/** Abstract stand-in for a missing screenshot, using the hero's shape language. */
-function PlaceholderArt({ kind }: { kind: Project["art"] }) {
-  return (
-    <div data-art aria-hidden="true" className="absolute inset-0 grid place-items-center">
-      {kind === "ring" && (
-        <div className="relative aspect-square h-[78%] rounded-full border border-accent">
-          <span className="absolute left-1/2 top-0 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent" />
-        </div>
-      )}
-      {kind === "square" && <div className="aspect-square h-[52%] rotate-12 rounded-[18%] border border-accent2" />}
-      {kind === "path" && (
-        <svg viewBox="0 0 300 200" className="w-[70%] overflow-visible">
-          <path d="M10 160 C 80 10, 150 10, 150 100 S 240 190, 290 40" fill="none" stroke="var(--muted)" strokeWidth="1.5" strokeDasharray="4 6" />
-          <circle cx="150" cy="100" r="7" fill="var(--accent)" />
-        </svg>
-      )}
-    </div>
-  );
-}
-
 export default function Projects() {
   const root = useRef<HTMLElement>(null);
+  const [openSlug, setOpenSlug] = useState<string | null>(null);
   const [nav, setNav] = useState<CarouselNav>({ index: 0, atStart: true, atEnd: false });
 
   useGSAP(
@@ -82,38 +65,47 @@ export default function Projects() {
             data-fade
             aria-roledescription="slide"
             aria-label={`${i + 1} of ${projects.length}`}
-            className="w-[82vw] shrink-0 snap-start sm:w-[28rem] md:w-[42rem]"
+            className="group relative w-[82vw] shrink-0 snap-start sm:w-[28rem] md:w-[42rem]"
           >
-            <div data-card-inner className="overflow-hidden rounded-lg border border-line bg-surface">
+            <div data-card-inner className="relative overflow-hidden rounded-lg border border-line bg-surface transition-colors group-hover:border-accent">
               <div className="relative aspect-[16/10] overflow-hidden border-b border-line bg-bg">
-                {p.image ? (
-                  <Image src={p.image} alt={`${p.title} preview`} fill sizes="(min-width: 768px) 42rem, 82vw" className="object-cover" />
+                {p.gallery[0].src ? (
+                  <Image src={p.gallery[0].src} alt={p.gallery[0].alt} fill sizes="(min-width: 768px) 42rem, 82vw" className="object-cover" />
                 ) : (
                   <>
-                    <PlaceholderArt kind={p.art} />
+                    <ProjectArt kind={p.gallery[0].art} drift />
                     <p className="absolute bottom-3 left-4 text-xs text-soft">Preview to be added</p>
                   </>
                 )}
               </div>
               <div className="p-5 md:p-6">
                 <p className="font-mono text-xs text-soft">{p.context}</p>
-                <h3 className="mt-2 font-lab text-2xl font-bold leading-tight">{p.title}</h3>
+                <h3 className="mt-2 font-lab text-2xl font-bold leading-tight">
+                  {/* Stretched button: the whole card opens the details */}
+                  <button
+                    type="button"
+                    aria-haspopup="dialog"
+                    onClick={() => setOpenSlug(p.slug)}
+                    className="text-left outline-none after:absolute after:inset-0 after:rounded-lg after:content-[''] focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-accent"
+                  >
+                    {p.title}
+                  </button>
+                </h3>
                 <p className="mt-2 text-soft">{p.summary}</p>
                 <ul className="mt-4 flex flex-wrap gap-2">
                   {p.tags.map((t) => (
                     <li key={t} className="rounded-full border border-line px-3 py-1 text-xs text-soft">{t}</li>
                   ))}
                 </ul>
-                {p.href && (
-                  <a href={p.href} target="_blank" rel="noreferrer" className="mt-5 inline-block border-b border-accent pb-0.5 text-sm transition-colors hover:text-accent">
-                    View project
-                  </a>
-                )}
+                <p aria-hidden="true" className="mt-5 text-sm text-accent">
+                  View details <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
+                </p>
               </div>
             </div>
           </article>
         ))}
       </div>
+      <ProjectDialog project={projects.find((p) => p.slug === openSlug) ?? null} onClose={() => setOpenSlug(null)} />
     </section>
   );
 }

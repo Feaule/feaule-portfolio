@@ -1,6 +1,7 @@
 import Navbar from "@/components/shared/Navbar";
 import Hero from "./Hero";
 import About from "./About";
+import Skills from "./Skills";
 import Projects from "./Projects";
 
 /** Style B — Experimental Motion Lab. Sections are added checkpoint by checkpoint. */
@@ -11,6 +12,7 @@ export default function StyleB() {
       <main id="main">
         <Hero />
         <About />
+        <Skills />
         <Projects />
       </main>
     </>
