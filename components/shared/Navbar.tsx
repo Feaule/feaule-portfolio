@@ -24,10 +24,10 @@ export default function Navbar({ variant, showSwitch = true }: Props) {
           {showSwitch && (
             <div className="hidden items-center gap-1 text-xs text-muted sm:flex" aria-label="Compare concepts">
               <Link href="/concept-a" aria-current={variant === "a" ? "page" : undefined}
-                className={variant === "a" ? "text-accent" : "hover:text-fg"}>A</Link>
+                className={`grid min-h-6 min-w-6 place-items-center ${variant === "a" ? "text-accent" : "hover:text-fg"}`}>A</Link>
               <span aria-hidden="true">/</span>
               <Link href="/concept-b" aria-current={variant === "b" ? "page" : undefined}
-                className={variant === "b" ? "text-accent" : "hover:text-fg"}>B</Link>
+                className={`grid min-h-6 min-w-6 place-items-center ${variant === "b" ? "text-accent" : "hover:text-fg"}`}>B</Link>
             </div>
           )}
           <ThemeToggle />
