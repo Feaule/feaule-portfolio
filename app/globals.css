@@ -83,3 +83,30 @@ body {
   .js [data-draw] { stroke-dashoffset: 1; }
   .js [data-shape] { opacity: 0; }
 }
+
+/* Footer memakai tema KEBALIKAN untuk kontras */
+:root footer[data-invert] {
+  --bg: #dce3ec;
+  --surface: #cbd5e1;
+  --fg: #101827;
+  --fg-soft: #526074;
+  --muted: #526074;
+  --line: color-mix(in srgb, #101827 14%, transparent);
+  --accent: #0a6fa3;
+  --accent-2: #4f46e5;
+  color-scheme: light;
+}
+[data-theme="light"] footer[data-invert] {
+  --bg: #101827;
+  --surface: #1c293a;
+  --fg: #f8fafc;
+  --fg-soft: #b8c4d3;
+  --muted: #94a3b8;
+  --line: color-mix(in srgb, #f8fafc 14%, transparent);
+  --accent: #38bdf8;
+  --accent-2: #818cf8;
+  color-scheme: dark;
+}
+
+:root { --section-y: 4rem; }
+@media (min-width: 768px) { :root { --section-y: 6rem; } }
