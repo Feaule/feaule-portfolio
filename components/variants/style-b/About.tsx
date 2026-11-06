@@ -27,7 +27,7 @@ export default function About() {
   const src = profile.portrait.src ?? profile.portrait.fallbackSrc;
 
   return (
-    <section id="about" ref={root} className="relative overflow-x-clip py-24 md:py-36">
+    <section id="about" ref={root} className="relative overflow-x-clip py-[var(--section-y)]">
       {/* Backdrop shapes: same language as the hero, drifting on scroll */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         <div data-drift="-1" className="absolute -left-[18vmin] top-[6%] size-[48vmin] rounded-full border border-line" />

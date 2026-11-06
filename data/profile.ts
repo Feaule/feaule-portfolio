@@ -99,7 +99,7 @@ export const profile = {
   /** External portfolio (e.g. Google Drive) for editing projects. Add the URL when ready. */
   editing: {
     label: "Editing portfolio",
-    handle: "My graphic design and motion graphics work",
+    handle: "Design and motion graphics work",
     summary: "More of my video editing and motion graphics work, collected in an external portfolio.",
     href: "https://drive.google.com/drive/folders/1DJG5akWDq_bVfd4wDv4t3OacHTDlsroS?usp=sharing" as string | null,
   },

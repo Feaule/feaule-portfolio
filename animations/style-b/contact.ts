@@ -1,36 +1,23 @@
-import { gsap, SplitText, MQ } from "@/lib/gsap";
+import { gsap, MQ } from "@/lib/gsap";
 
-/** Style B contact: heading letters, rows rise in one by one, background shapes drift. */
+/**
+ * Style B footer/contact: items fade up in a quiet stagger, and the big
+ * wordmark rises into place as you reach the bottom of the page (transform only).
+ */
 export function animateContactB(root: HTMLElement) {
   const q = gsap.utils.selector(root);
   const mm = gsap.matchMedia();
 
   mm.add(MQ.motionOk, () => {
-    const heading = q("[data-split]")[0];
-    const split = SplitText.create(heading, { type: "chars", charsClass: "char" });
-    gsap.from(split.chars, {
-      yPercent: 120, rotate: () => gsap.utils.random(-20, 20), opacity: 0,
-      duration: 1, ease: "back.out(1.6)", stagger: { each: 0.06, from: "random" },
-      scrollTrigger: { trigger: heading, start: "top 85%", once: true },
-    });
-    gsap.set(heading, { visibility: "visible" });
-
-    (q("[data-fade]") as HTMLElement[]).forEach((el) => {
-      gsap.fromTo(el, { opacity: 0, y: 28 }, {
-        opacity: 1, y: 0, duration: 0.9, ease: "power3.out",
-        scrollTrigger: { trigger: el, start: "top 90%", once: true },
-      });
+    gsap.fromTo(q("[data-fade]"), { opacity: 0, y: 20 }, {
+      opacity: 1, y: 0, duration: 0.8, stagger: 0.07, ease: "power3.out",
+      scrollTrigger: { trigger: root, start: "top 80%", once: true },
     });
 
-    (q("[data-drift]") as HTMLElement[]).forEach((el) => {
-      const d = Number(el.dataset.drift);
-      gsap.to(el, {
-        yPercent: d * 25, rotate: d * 40, ease: "none",
-        scrollTrigger: { trigger: root, start: "top bottom", end: "bottom top", scrub: true },
-      });
+    gsap.fromTo(q("[data-wordmark]"), { yPercent: 28 }, {
+      yPercent: 0, ease: "none",
+      scrollTrigger: { trigger: root, start: "top bottom", end: "bottom bottom", scrub: true },
     });
-
-    return () => split.revert();
   });
 
   return { revert: () => mm.revert() };

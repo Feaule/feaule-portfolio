@@ -29,7 +29,7 @@ export default function Projects() {
   const arrow = "grid size-11 place-items-center rounded-full border border-line text-fg transition-colors hover:border-accent hover:text-accent disabled:pointer-events-none disabled:opacity-35";
 
   return (
-    <section id="projects" ref={root} className="relative overflow-x-clip py-24 md:py-36">
+    <section id="projects" ref={root} className="relative overflow-x-clip py-[var(--section-y)]">
       <div className="mx-auto max-w-7xl px-5 md:px-10">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <h2 data-split className="whitespace-nowrap font-lab text-[clamp(2.75rem,11vw,10rem)] font-extrabold leading-[0.9] tracking-tight">

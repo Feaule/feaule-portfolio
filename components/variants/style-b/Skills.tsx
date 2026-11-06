@@ -47,7 +47,7 @@ export default function Skills() {
   );
 
   return (
-    <section id="skills" ref={root} className="relative overflow-x-clip py-24 md:py-36">
+    <section id="skills" ref={root} className="relative overflow-x-clip py-[var(--section-y)]">
       <div className="mx-auto max-w-7xl px-5 md:px-10">
         <h2
           data-split

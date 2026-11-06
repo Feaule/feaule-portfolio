@@ -4,7 +4,6 @@ import About from "./About";
 import Skills from "./Skills";
 import Projects from "./Projects";
 import Contact from "./Contact";
-import Footer from "@/components/shared/Footer";
 
 /** Style B — Experimental Motion Lab. Sections are added checkpoint by checkpoint. */
 export default function StyleB() {
@@ -16,9 +15,8 @@ export default function StyleB() {
         <About />
         <Skills />
         <Projects />
-        <Contact />
       </main>
-      <Footer />
+      <Contact />
     </>
   );
 }
