@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { useGSAP } from "@/lib/gsap";
 import { profile } from "@/data/profile";
 import { animateHeroB, toggleLayer, pulseLayer } from "@/animations/style-b/hero";
@@ -92,18 +92,23 @@ export default function Hero() {
       </div>
 
       {/* ── Foreground ─────────────────────────────────────── */}
-      <div className="relative z-10 mx-auto flex min-h-svh max-w-7xl flex-col px-5 pb-6 pt-20 md:px-10 md:pb-10">
-        <div className="flex flex-1 flex-col justify-center py-10">
+      <div className="relative z-10 mx-auto flex min-h-svh max-w-7xl flex-col px-5 pb-6 pt-20 md:px-10 md:pb-10 lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-8">
+        <div className="flex flex-1 flex-col justify-center py-10 lg:col-span-7 lg:py-0">
           <h1
             data-split
-            className="whitespace-nowrap font-lab text-[clamp(3rem,15.5vw,14rem)] font-extrabold leading-[0.9] tracking-tight"
+            className="font-lab text-[length:min(21vw,20vh,18rem)] font-extrabold leading-[0.9] tracking-tight lg:text-[length:min(10vw,16vh,12rem)]"
           >
-            {profile.name}
+            {profile.hero.title.map((word, i) => (
+              <Fragment key={word}>
+                {i > 0 && " "}
+                <span className="block whitespace-nowrap">{word}</span>
+              </Fragment>
+            ))}
           </h1>
           <p data-fade className="mt-5 font-lab text-xl font-bold text-accent">
             {profile.tagline}
           </p>
-          <p data-fade className="mt-2 max-w-lg text-lg leading-snug text-soft">
+          <p data-fade className="mt-2 max-w-[36ch] text-lg leading-snug text-soft">
             {profile.hero.line}
           </p>
           <a
@@ -118,9 +123,10 @@ export default function Hero() {
         {/* Layer panel: the eye toggles each shape on the stage */}
         <div
           data-fade
-          className="w-full rounded-lg border border-line bg-surface/85 p-2 backdrop-blur md:ml-auto md:w-80"
+          className="w-full rounded-lg border border-line bg-surface/85 p-2 backdrop-blur md:ml-auto md:w-80 lg:col-span-4 lg:col-start-9 lg:row-start-1 lg:self-end lg:mb-0"
         >
-          <p className="px-2 pb-1 pt-0.5 text-xs text-soft">Areas I&apos;m exploring</p>
+          {/* <p className="px-2 pb-1 pt-0.5 text-xs text-soft">Areas I&apos;m exploring</p> */}
+          <p className="px-2 pb-1 pt-0.5 text-xs text-soft">Layer Settings</p>
           <ul>
             {profile.focus.map((name, i) => (
               <li key={name} className="flex items-center gap-1 rounded-md" onPointerEnter={() => pulseLayer(root.current!, i)}>
@@ -138,7 +144,7 @@ export default function Hero() {
                   </svg>
                 </button>
                 <span aria-hidden="true" className="size-3 shrink-0 rounded-[3px]" style={{ background: LABELS[i] }} />
-                <span aria-hidden="true" className="w-4 text-right text-xs tabular-nums text-muted">{i + 1}</span>
+                <span aria-hidden="true" className="w-12 text-right text-xs tabular-nums text-muted">Layer {i + 1}</span>
                 <span className={`truncate pl-1 text-sm ${visible[i] ? "text-fg" : "text-muted line-through"}`}>{name}</span>
               </li>
             ))}

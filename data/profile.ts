@@ -15,13 +15,14 @@ export const profile = {
    * Areas of interest, not a ranking of expertise.
    */
   focus: [
-    "Frontend development",
-    "Business Information Systems",
-    "Digital product thinking",
-    "Motion graphics",
+    "Shape Orbit",
+    "Shape Rectangle",
+    "Shape Full Circle",
+    "Path Object",
   ],
 
   hero: {
+    title: ["Felix", "Portfolio"],
     line: "Exploring technology through code, data, and creative expression.",
   },
 
@@ -75,7 +76,7 @@ export const profile = {
   },
 
   portrait: {
-    src: "/images/portrait.png" as string | null,
+    src: "/images/portrait.webp" as string | null,
     fallbackSrc: "/images/portrait-placeholder.png",
     alt: "Portrait of Feaule",
     position: "50% 20%",
