@@ -40,15 +40,21 @@ const shots = (title: string): GalleryImage[] => [
   { src: null, alt: `${title} — image 2 (to be added)`, art: "square" },
   { src: null, alt: `${title} — image 3 (to be added)`, art: "path" },
 ];
+const img = (src: string, alt: string): GalleryImage => ({ src, alt, art: "ring" });
 
 export const projects: Project[] = [
   {
-    slug: "apartment-management",
-    title: "Apartment Management System",
-    summary: "A CRUD-based apartment management system built as part of my coursework.",
+    slug: "data-science-modeling",
+    title: "Data Science Modeling",
+    summary: "PLACEHOLDER — add the project name, your role, and the user problem it addressed.",
     context: "Coursework",
-    tags: ["CRUD", "Coursework"],
-    gallery: shots("Apartment Management System"),
+    tags: ["Data Science", "SQL", "NoSQL", "Coursework"],
+    // gallery: shots("Apartment Management System"),
+    gallery: [
+      img("/images/projects/pdds-1.png", "Data Science Project — image 1"),
+      img("/images/projects/pdds-2.png", "Data Science Project — image 2"),
+      img("/images/projects/pdds-3.png", "Data Science Project — image 3"),
+    ],
     detail: {
       overview: [
         "A CRUD-based apartment management system developed as part of my coursework.",
@@ -61,7 +67,7 @@ export const projects: Project[] = [
       ],
       links: [],
     },
-    placeholder: false,
+    placeholder: true,
   },
   {
     slug: "ui-ux-project",
@@ -69,7 +75,12 @@ export const projects: Project[] = [
     summary: "PLACEHOLDER — add the project name, your role, and the user problem it addressed.",
     context: "UI/UX",
     tags: ["UI/UX"],
-    gallery: shots("UI/UX project"),
+    // gallery: shots("UI/UX project"),
+    gallery: [
+      img("/images/projects/uiux-1.png", "UI/UX project — image 1"),
+      img("/images/projects/uiux-2.png", "UI/UX project — image 2"),
+      img("/images/projects/uiux-3.png", "UI/UX project — image 3"),
+    ],
     detail: {
       overview: [
         "PLACEHOLDER — describe the problem, who the users were, and how the design solved it.",
@@ -84,12 +95,17 @@ export const projects: Project[] = [
     placeholder: true,
   },
   {
-    slug: "motion-and-visuals",
-    title: "Motion graphics & visual assets",
-    summary: "Visual assets, video editing, and motion graphics made for university organizational committees.",
-    context: "Organizational committees",
-    tags: ["Motion graphics", "Video editing"],
-    gallery: shots("Motion graphics & visual assets"),
+    slug: "ai-and-machine-learning",
+    title: "AI and Machine Learning",
+    summary: "Projects and research work focused on implementing AI and machine learning solutions.",
+    context: "Academic Research",
+    tags: ["AI", "Machine Learning", "Python", "TensorFlow"],
+    // gallery: shots("AI and Machine Learning"),
+    gallery: [
+      img("/images/projects/aiml-1.png", "AI and Machine Learning — image 1"),
+      img("/images/projects/aiml-2.png", "AI and Machine Learning — image 2"),
+      img("/images/projects/aiml-3.png", "AI and Machine Learning — image 3"),
+    ],
     detail: {
       overview: [
         "Visual assets, video editing, and motion graphics made for university organizational committees.",
