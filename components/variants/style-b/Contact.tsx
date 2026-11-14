@@ -15,7 +15,7 @@ const BRAND: Record<SocialId, { bg: string; fg: string }> = {
   github: { bg: "var(--fg)", fg: "var(--bg)" },
   linkedin: { bg: "#0a66c2", fg: "#ffffff" },
   instagram: { bg: "#c13584", fg: "#ffffff" },
-  editing: { bg: "#0b8043", fg: "#ffffff" },
+  editing: { bg: "#FECD06", fg: "#ffffff" },
 };
 
 const Arrow = ({ up = false }: { up?: boolean }) => (
