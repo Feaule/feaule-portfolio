@@ -72,7 +72,7 @@ export default function Projects() {
             <div data-card-inner className="relative overflow-hidden rounded-lg border border-line bg-surface transition-colors group-hover:border-accent">
               <div className="relative aspect-[16/10] overflow-hidden border-b border-line bg-bg">
                 {p.gallery[0].src ? (
-                  <Image src={p.gallery[0].src} alt={p.gallery[0].alt} fill sizes="(min-width: 768px) 42rem, 82vw" className="object-cover" />
+                  <Image src={p.gallery[0].src} alt={p.gallery[0].alt} fill sizes="(min-width: 768px) 42rem, 82vw" loading={i === 0 ? "eager" : "lazy"} className="object-cover" />
                 ) : (
                   <>
                     <ProjectArt kind={p.gallery[0].art} drift />
