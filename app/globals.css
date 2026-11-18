@@ -112,3 +112,53 @@ body {
 
 :root { --section-y: 4rem; }
 @media (min-width: 768px) { :root { --section-y: 6rem; } }
+
+.journey-viewport { scroll-snap-type: x mandatory; }
+.journey-frame { border: 1px solid var(--line); border-radius: 0.5rem; }
+.journey-desc {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
+}
+.journey-desc > div { min-height: 0; overflow: hidden; }
+
+@media (min-width: 768px) {
+  .journey-viewport { scroll-snap-type: none; }
+
+  .journey-stage[data-side="above"] { --rise: 18px; }
+  .journey-stage[data-side="below"] { --rise: -18px; }
+
+  .journey-card,
+  .journey-stem {
+    transition: opacity 0.5s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .journey-frame {
+    transform-origin: center;
+    transition: opacity 0.35s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
+  }
+  .journey-stem { transform-origin: top; }
+  .journey-stage[data-side="above"] .journey-stem { transform-origin: bottom; }
+
+  /* Belum dicapai playhead: tersembunyi, lalu tumbuh keluar dari rail saat tercapai */
+  .journey-stage[data-state="future"] .journey-card {
+    opacity: 0;
+    transform: translateY(var(--rise)) scale(0.94);
+    pointer-events: none;
+  }
+  .journey-stage[data-state="future"] .journey-frame { transform: scale(0.8, 0.6); }
+  .journey-stage[data-state="future"] .journey-stem { opacity: 0; transform: scaleY(0); }
+
+  .journey-stage[data-state="active"] .journey-frame { border-color: var(--accent); }
+}
+
+/* Perangkat dengan hover: tahap yang sudah lewat menyusut, buka lagi saat dihover */
+@media (min-width: 768px) and (hover: hover) {
+  .journey-stage[data-state="past"] .journey-frame { opacity: 0; transform: scale(0.8, 0.6); }
+  .journey-stage[data-state="past"] .journey-desc { grid-template-rows: 0fr; opacity: 0; }
+  .journey-stage[data-state="past"]:hover .journey-frame {
+    opacity: 1;
+    transform: none;
+    border-color: var(--accent);
+  }
+  .journey-stage[data-state="past"]:hover .journey-desc { grid-template-rows: 1fr; opacity: 1; }
+}

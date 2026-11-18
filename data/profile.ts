@@ -27,16 +27,20 @@ export const profile = {
   },
 
   about: {
-    lead: "I'm an Informatics student curious about how technology and creativity come together to shape digital experiences.",
+    greeting: "Hola, Amigos!",
+    intro: [
+      "My name is Felix Augurius, an undergraduate Informatics student specializing in Business Information Systems at Petra Christian University.",
+      // "I'm interested in exploring how technology, business, and creativity come together through digital products, data, and visual experiences.",
+    ],
 
     sections: [
       {
         title: "Beyond the Screen",
-        text: "Exploring frontend development, UI/UX, and data through academic projects, including an apartment management system.",
+        text: "Outside my academic life, I enjoy watching YouTube, playing games, etc whatever I like.",
       },
       {
         title: "Finding My Creative Side",
-        text: "Outside the classroom, I discovered a love for visual storytelling through video editing, motion graphics, and organizational experiences.",
+        text: "I also enjoy exploring visual creativity through video editing and motion graphics. Occasionally, I like wandering around the city, capturing little moments through photos and videos along the way.",
       },
     ],
   },
@@ -50,27 +54,28 @@ export const profile = {
     stages: [
       {
         index: "01",
-        title: "Discover",
-        easing: "Linear",
-        text: "Started exploring technology through Informatics.",
+        title: "WANDER",
+        text: "A curious mind, always looking around and finding new things to explore.",
       },
       {
         index: "02",
-        title: "Explore",
-        easing: "Easy Ease",
-        text: "Learning through code, interfaces, and data.",
+        title: "DISCOVER",
+        text: "Exploring different interests through technology, visual arts, and creative experiences to find what inspires me.",
       },
       {
         index: "03",
-        title: "Create",
-        easing: "Bezier",
-        text: "Turning ideas into visuals and motion.",
+        title: "EXPERIMENT",
+        text: "Trying new tools and approaches. Not everything works, but every attempt adds a new perspective.",
       },
       {
         index: "04",
-        title: "Evolve",
-        easing: "Auto Bezier",
-        text: "Connecting technical and creative perspectives.",
+        title: "CONNECT",
+        text: "Combining logical thinking with visual expression to see ideas from different angles.",
+      },
+      {
+        index: "05",
+        title: "EVOLVE",
+        text: "Embracing new challenges and growing through learning and creating.",
       },
     ],
   },
@@ -78,7 +83,7 @@ export const profile = {
   portrait: {
     src: "/images/portrait.webp" as string | null,
     fallbackSrc: "/images/portrait-placeholder.png",
-    alt: "Portrait of Feaule",
+    alt: "Portrait of Felix",
     position: "50% 20%",
   },
 
@@ -87,8 +92,7 @@ export const profile = {
    * `email` is optional — leave null to hide it, or set e.g. "you@example.com".
    */
   contact: {
-    /** DRAFT copy — edit freely. */
-    lead: "I'm looking for internship opportunities — feel free to say hello.",
+    lead: "For inquiries, collaborations, or just a quick hello, my inbox is open.",
     email: null as string | null,
     links: [
       { id: "github", label: "GitHub", handle: "github.com/Feaule", href: "https://github.com/Feaule" },

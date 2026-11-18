@@ -1,6 +1,7 @@
 import Navbar from "@/components/shared/Navbar";
 import Hero from "./Hero";
 import About from "./About";
+import Journey from "./Journey";
 import Skills from "./Skills";
 import Projects from "./Projects";
 import Contact from "./Contact";
@@ -13,6 +14,7 @@ export default function StyleB() {
       <main id="main">
         <Hero />
         <About />
+        <Journey />
         <Skills />
         <Projects />
       </main>
