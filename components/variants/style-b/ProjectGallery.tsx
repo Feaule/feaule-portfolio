@@ -27,8 +27,7 @@ export default function ProjectGallery({ project }: { project: Project }) {
 
   return (
     <div ref={root} role="group" aria-roledescription="carousel" aria-label={`${project.title} images`}>
-      <div className="relative aspect-[16/10] max-h-[46svh] w-full overflow-hidden rounded-md border border-line bg-bg" aria-live={s.playing ? "off" : "polite"}>
-        {project.gallery.map((g, i) => (
+        <div className="relative mx-auto aspect-[16/10] w-full max-w-[calc(46svh*1.6)] overflow-hidden rounded-md border border-line bg-bg" aria-live={s.playing ? "off" : "polite"}>        {project.gallery.map((g, i) => (
           <div
             key={i}
             data-slide

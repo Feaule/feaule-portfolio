@@ -162,3 +162,25 @@ body {
   }
   .journey-stage[data-state="past"]:hover .journey-desc { grid-template-rows: 1fr; opacity: 1; }
 }
+
+/* ── Projects coverflow ───────────────────────────── */
+.proj-stage { touch-action: pan-y; cursor: grab; user-select: none; -webkit-user-select: none; }
+.proj-stage[data-dragging="true"] { cursor: grabbing; }
+.proj-card { will-change: transform; }
+.proj-card:not([data-active="true"]) { cursor: pointer; }
+.proj-inner {
+  transition: scale 0.6s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.6s ease;
+}
+.proj-card[data-active="true"] .proj-inner {
+  box-shadow: 0 30px 80px -32px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+@media (hover: hover) {
+  .proj-card[data-active="true"]:hover .proj-inner { scale: 1.015; border-color: var(--accent); }
+}
+
+/* Dialog backdrop fades in with the zoom */
+@keyframes dlg-fade { from { opacity: 0; } to { opacity: 1; } }
+dialog[open]::backdrop { animation: dlg-fade 0.45s ease both; }
+@media (prefers-reduced-motion: reduce) {
+  dialog[open]::backdrop { animation: none; }
+}

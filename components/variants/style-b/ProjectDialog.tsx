@@ -17,8 +17,27 @@ function unlockScroll() {
   document.body.style.paddingRight = "";
 }
 
+/** A clip window matching the card's rectangle, expressed in the panel's own box. */
+function windowOf(o: DOMRect, r: DOMRect) {
+  const t = Math.max(0, o.top - r.top);
+  const l = Math.max(0, o.left - r.left);
+  const rt = Math.max(0, r.right - o.right);
+  const b = Math.max(0, r.bottom - o.bottom);
+  return `inset(${t}px ${rt}px ${b}px ${l}px round 8px)`;
+}
+const originOf = (o: DOMRect, r: DOMRect) =>
+  `${o.left + o.width / 2 - r.left}px ${o.top + o.height / 2 - r.top}px`;
+
 /** Native <dialog>: focus trap, Esc, and inert background come for free. */
-export default function ProjectDialog({ project, onClose }: { project: Project | null; onClose: () => void }) {
+export default function ProjectDialog({
+  project,
+  origin = null,
+  onClose,
+}: {
+  project: Project | null;
+  origin?: DOMRect | null;
+  onClose: () => void;
+}) {
   const dlg = useRef<HTMLDialogElement>(null);
   const panel = useRef<HTMLDivElement>(null);
 
@@ -27,11 +46,24 @@ export default function ProjectDialog({ project, onClose }: { project: Project |
     if (project && !d.open) {
       lockScroll();
       d.showModal();
-      if (!reduced() && panel.current) {
-        gsap.fromTo(panel.current, { y: 36, opacity: 0, scale: 0.98 }, { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" });
+      const el = panel.current;
+      if (reduced() || !el) return;
+      const r = el.getBoundingClientRect();
+      if (origin) {
+        // Zoom-in: the panel opens out of the card's rectangle.
+        gsap.fromTo(
+          el,
+          { clipPath: windowOf(origin, r), scale: 0.9, opacity: 0, transformOrigin: originOf(origin, r) },
+          {
+            clipPath: "inset(0px 0px 0px 0px round 8px)", scale: 1, opacity: 1, duration: 0.75, ease: "expo.out",
+            onComplete: () => { gsap.set(el, { clearProps: "clipPath,transform,opacity,transformOrigin" }); },
+          },
+        );
+      } else {
+        gsap.fromTo(el, { y: 36, opacity: 0, scale: 0.98 }, { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" });
       }
     }
-  }, [project]);
+  }, [project, origin]);
 
   useEffect(() => unlockScroll, []);
 
@@ -41,8 +73,17 @@ export default function ProjectDialog({ project, onClose }: { project: Project |
     onClose();
   };
   const close = () => {
-    if (reduced() || !panel.current) return finish();
-    gsap.to(panel.current, { y: 24, opacity: 0, duration: 0.25, ease: "power2.in", onComplete: finish });
+    const el = panel.current;
+    if (reduced() || !el) return finish();
+    if (origin) {
+      const r = el.getBoundingClientRect();
+      gsap.to(el, {
+        clipPath: windowOf(origin, r), scale: 0.9, opacity: 0, transformOrigin: originOf(origin, r),
+        duration: 0.5, ease: "power3.inOut", onComplete: finish,
+      });
+    } else {
+      gsap.to(el, { y: 24, opacity: 0, duration: 0.25, ease: "power2.in", onComplete: finish });
+    }
   };
 
   return (
