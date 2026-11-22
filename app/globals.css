@@ -184,3 +184,12 @@ dialog[open]::backdrop { animation: dlg-fade 0.45s ease both; }
 @media (prefers-reduced-motion: reduce) {
   dialog[open]::backdrop { animation: none; }
 }
+
+/* Lapisan garis tipis untuk efek hologram pada foto About */
+.holo-lines {
+  background: repeating-linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--accent) 35%, transparent) 0 1px,
+    transparent 1px 4px
+  );
+}

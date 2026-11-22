@@ -62,6 +62,17 @@ export default function About() {
                     className="object-cover"
                     style={{ objectPosition: profile.portrait.position }}
                   />
+                  {/* Hologram overlays (dekoratif) */}
+                  <div data-holo-fx aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-0">
+                    <span className="absolute inset-0 bg-accent/20" />
+                    <span className="holo-lines absolute inset-0 opacity-80" />
+                  </div>
+                  <span
+                    data-holo-scan
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-x-0 top-0 h-px bg-accent opacity-0 shadow-[0_0_18px_4px_color-mix(in_srgb,var(--accent)_70%,transparent)]"
+                  />
+                  <div data-holo-cubes aria-hidden="true" className="pointer-events-none absolute inset-0" />
                   {CORNERS.map((c) => (
                     <span key={c} aria-hidden="true" className={`absolute size-4 border-accent ${c}`} />
                   ))}
