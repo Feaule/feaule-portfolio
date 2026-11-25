@@ -23,7 +23,7 @@ export default function Journey() {
       aria-labelledby="journey-heading"
       className="relative py-[var(--section-y)] md:flex md:min-h-svh md:flex-col md:justify-center"
     >
-      <div className="mx-auto w-full max-w-7xl px-5 md:px-10">
+      <div data-content className="mx-auto w-full max-w-7xl px-5 md:px-10">
         <h2
           id="journey-heading"
           className="font-lab text-[clamp(2.75rem,7vw,5.5rem)] font-extrabold leading-[0.9] tracking-tight"
