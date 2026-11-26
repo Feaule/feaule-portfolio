@@ -193,3 +193,12 @@ dialog[open]::backdrop { animation: dlg-fade 0.45s ease both; }
     transparent 1px 4px
   );
 }
+
+/* Crossfade thumbnail kartu Editing portfolio */
+.thumb-slide { opacity: 0; }
+.thumb-slide[data-state="out"] { opacity: 1; z-index: 1; }
+.thumb-slide[data-state="in"] {
+  opacity: 1;
+  z-index: 2;
+  transition: opacity 0.9s ease;
+}

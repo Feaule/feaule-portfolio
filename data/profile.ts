@@ -5,6 +5,11 @@
  */
 export type Placeholder<T> = T & { placeholder: true };
 export type ContactLink = { id: string; label: string; handle: string | null; href: string | null };
+export type EditingThumb = {
+  src: string; // gambar (wajib): thumbnail statis dan cadangan
+  video?: { webm?: string; mp4?: string };
+  hold?: number; // ms tampil sebelum ganti
+};
 
 export const profile = {
   name: "Feaule",
@@ -107,5 +112,22 @@ export const profile = {
     handle: "Design and motion graphics work",
     summary: "More of my video editing and motion graphics work, collected in an external portfolio.",
     href: "https://drive.google.com/drive/folders/1DJG5akWDq_bVfd4wDv4t3OacHTDlsroS?usp=sharing" as string | null,
+    thumbnails: [
+      {
+        src: "/images/editing/edit-1.webp", // gambar cadangan (frame pertama klip)
+        video: { mp4: "/videos/editing/edit-1.mp4" },
+        hold: 4100,
+      },
+      {
+        src: "/images/editing/edit-2.webp",
+        video: { mp4: "/videos/editing/edit-2.mp4" },
+        hold: 4100,
+      },
+      {
+        src: "/images/editing/edit-4.webp",
+        video: { mp4: "/videos/editing/edit-4.mp4" },
+        hold: 4100,
+      },
+    ] as EditingThumb[],
   },
 } as const;

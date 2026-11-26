@@ -7,6 +7,7 @@ import { profile } from "@/data/profile";
 import { animateProjectsB, type CarouselApi, type CarouselNav } from "@/animations/style-b/projects";
 import ProjectArt from "./ProjectArt";
 import ProjectDialog from "./ProjectDialog";
+import EditingThumbs from "./EditingThumbs";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -125,10 +126,8 @@ export default function Projects() {
           >
             <span data-dim aria-hidden="true" className="pointer-events-none absolute inset-0 z-10 bg-bg opacity-0" />
             <div className="relative aspect-[16/10] overflow-hidden border-b border-line bg-bg">
-              <div data-media aria-hidden="true" className="absolute inset-0 grid place-items-center">
-                <div className="relative grid aspect-square h-[78%] place-items-center rounded-full border border-accent">
-                  <svg width="44" height="44" viewBox="0 0 44 44"><path d="M15 9v26l22-13z" fill="var(--accent)" /></svg>
-                </div>
+              <div data-media className="absolute inset-0 scale-110">
+                <EditingThumbs thumbs={profile.editing.thumbnails} />
               </div>
             </div>
             <div className="flex flex-1 flex-col p-5 md:p-6">
