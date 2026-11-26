@@ -26,7 +26,7 @@ export default function Navbar({ variant, showSwitch = true }: Props) {
               <Link href="/concept-a" aria-current={variant === "a" ? "page" : undefined}
                 className={`grid min-h-6 min-w-6 place-items-center ${variant === "a" ? "text-accent" : "hover:text-fg"}`}>A</Link>
               <span aria-hidden="true">/</span>
-              <Link href="/concept-b" aria-current={variant === "b" ? "page" : undefined}
+              <Link href="/" aria-current={variant === "b" ? "page" : undefined}
                 className={`grid min-h-6 min-w-6 place-items-center ${variant === "b" ? "text-accent" : "hover:text-fg"}`}>B</Link>
             </div>
           )}

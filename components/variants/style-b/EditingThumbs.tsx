@@ -1,11 +1,29 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import { EditingThumb } from "@/data/profile";
 
 const INTERVAL = 3200; // jeda antar pergantian untuk gambar statis (ms)
 const FIRST_DELAY = 1200; // jeda pergantian pertama setelah kartu aktif (ms)
 const ONLY_WHEN_ACTIVE = true; // true = hanya berganti saat kartu ada di tengah carousel
+
+type NetworkConnection = EventTarget & { saveData?: boolean };
+
+function getConnection() {
+  return typeof navigator === "undefined"
+    ? undefined
+    : (navigator as Navigator & { connection?: NetworkConnection }).connection;
+}
+
+function subscribeToConnection(listener: () => void) {
+  const connection = getConnection();
+  connection?.addEventListener("change", listener);
+  return () => connection?.removeEventListener("change", listener);
+}
+
+function getCanVideo() {
+  return !getConnection()?.saveData;
+}
 
 export default function EditingThumbs({ thumbs }: { thumbs: EditingThumb[] }) {
   const box = useRef<HTMLDivElement>(null);
@@ -16,7 +34,7 @@ export default function EditingThumbs({ thumbs }: { thumbs: EditingThumb[] }) {
   const [index, setIndex] = useState(0);
   const [prev, setPrev] = useState(-1);
   const [armed, setArmed] = useState(false); // gambar ke-2+ dan video baru dimuat setelah kartu terlihat
-  const [canVideo, setCanVideo] = useState(false);
+  const canVideo = useSyncExternalStore(subscribeToConnection, getCanVideo, () => false);
   const [run, setRun] = useState(false);
 
   // Pengamat: terlihat di layar, tab aktif, dan kartu sedang di tengah carousel.
@@ -24,9 +42,6 @@ export default function EditingThumbs({ thumbs }: { thumbs: EditingThumb[] }) {
     const el = box.current;
     if (!el || n < 2) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
-    setCanVideo(!conn?.saveData);
 
     const f = flags.current;
     const update = () => setRun(f.inView && f.active && f.tab);

@@ -10,7 +10,7 @@ import Contact from "./Contact";
 export default function StyleB() {
   return (
     <>
-      <Navbar variant="b" />
+      <Navbar variant="b" showSwitch={false}/>
       <main id="main">
         <Hero />
         <About />
