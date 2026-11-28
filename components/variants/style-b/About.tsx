@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useGSAP } from "@/lib/gsap";
 import { profile } from "@/data/profile";
@@ -12,8 +12,48 @@ const CORNERS = [
   "bottom-3 right-3 border-b border-r",
 ];
 
+const GREETINGS = [
+  profile.about.greeting,
+  "Halo, teman-teman!",
+  "Hello, everyone!",
+  "大家好！",
+  "皆さん、こんにちは！",
+];
+
 export default function About() {
   const root = useRef<HTMLElement>(null);
+  const [greeting, setGreeting] = useState(GREETINGS[0]);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let index = 0;
+    let timer: ReturnType<typeof setTimeout>;
+
+    const type = (chars: string[], position = 0) => {
+      if (position >= chars.length) {
+        timer = setTimeout(erase, 3000);
+        return;
+      }
+
+      setGreeting(chars.slice(0, position + 1).join(""));
+      timer = setTimeout(() => type(chars, position + 1), 65);
+    };
+
+    const erase = (position = Array.from(GREETINGS[index]).length) => {
+      if (position <= 0) {
+        index = (index + 1) % GREETINGS.length;
+        type(Array.from(GREETINGS[index]));
+        return;
+      }
+
+      setGreeting(Array.from(GREETINGS[index]).slice(0, position - 1).join(""));
+      timer = setTimeout(() => erase(position - 1), 40);
+    };
+
+    timer = setTimeout(erase, 4000);
+    return () => clearTimeout(timer);
+  }, []);
 
   useGSAP(
     () => {
@@ -89,7 +129,9 @@ export default function About() {
           {/* Biography */}
           <div className="flex flex-col gap-10 md:gap-12">
             <div>
-              <h3 data-fade className="font-lab text-2xl font-bold leading-tight md:text-3xl">{profile.about.greeting}</h3>
+              <h3 data-fade aria-label="Greetings in Spanish, Indonesian, English, Mandarin, and Japanese" className="font-lab text-2xl font-bold leading-tight md:text-3xl">
+                <span aria-hidden="true">{greeting}<span className="ml-0.5 inline-block h-[1em] translate-y-[0.15em] border-r-2 border-accent motion-safe:animate-pulse" /></span>
+              </h3>
               {profile.about.intro.map((paragraph) => (
                 <p key={paragraph} data-fade className="mt-4 max-w-2xl text-lg leading-relaxed text-soft">{paragraph}</p>
               ))}
